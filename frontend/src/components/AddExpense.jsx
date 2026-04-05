@@ -35,7 +35,8 @@ const AddExpense = ({ isOpen, onClose, refreshData, existingData }) => {
       category: data.category,
       date: data.date
     };
-    if (data.description.trim()) payload.description = data.description;
+    if (data.description.trim()) 
+      payload.description = data.description;
 
     try {
       const url = isEditMode 
