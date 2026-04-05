@@ -1,10 +1,32 @@
 import { Navigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const ProtectedRoute = ({ children }) => {
-    const token = document.cookie.includes('token'); 
-    if (!token) {
-        return <Navigate to="/login" replace/>;
+    const [isAuth, setIsAuth] = useState(null);
+
+    useEffect(() => {
+        const verify = async () => {
+            try {
+                await axios.get('http://localhost:5000/api/users/check-auth', { 
+                    withCredentials: true 
+                });
+                setIsAuth(true);
+            } catch (err) {
+                setIsAuth(false);
+            }
+        };
+        verify();
+    }, []);
+
+    if (isAuth === null) {
+        return <div className="flex justify-center items-center h-screen">Loading...</div>;
     }
+
+    if (!isAuth) {
+        return <Navigate to="/login" replace />;
+    }
+
     return children;
 };
 

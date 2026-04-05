@@ -67,9 +67,14 @@ const loginUser=async(req,res)=>{
     })
   } catch (error) {
     res.status(500).json({ err: error.message });
-  }
-    
-    
+  } 
+}
+
+const checkAuth=async(req,res)=>{
+    res.status(200).json({ 
+        authenticated: true, 
+        user: req.user 
+    });
 }
 const logoutUser=(req,res)=>{
     res.clearCookie('token');
@@ -110,6 +115,7 @@ const updateBudget = async (req, res) => {
 module.exports = {
     registerUser,
     loginUser,
+    checkAuth,
     logoutUser,
     updateBudget
 };
