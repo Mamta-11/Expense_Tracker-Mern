@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios';
+import API from '../utils/api';
 import { useNavigate, Link } from 'react-router-dom';
 
 const Login = () => {
@@ -11,10 +11,10 @@ const Login = () => {
     e.preventDefault();
     try {
       const res=await API.post('/api/users/login', 
-        { email, password }, { withCredentials: true }
+        { email, password }
       );
   if(res.status === 200) {
-        // Chota sa delay taaki browser cookie set kar le
+  
         setTimeout(() => {
           navigate('/dashboard');
         }, 100); 

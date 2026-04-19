@@ -5,7 +5,7 @@ import API from '../utils/api';
 const Navbar = () => {
   const navigate = useNavigate();
   const logout = async () => {
-    await API.get('/api/users/logout', { withCredentials: true });
+    await API.get('/api/users/logout');
     navigate('/login');
   };
   return (

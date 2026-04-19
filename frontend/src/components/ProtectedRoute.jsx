@@ -8,9 +8,7 @@ const ProtectedRoute = ({ children }) => {
     useEffect(() => {
         const verify = async () => {
             try {
-                await API.get('/api/users/check-auth', { 
-                    withCredentials: true 
-                });
+                await API.get('/api/users/check-auth');
                 setIsAuth(true);
             } catch (err) {
                 setIsAuth(false);

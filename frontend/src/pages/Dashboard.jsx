@@ -14,10 +14,10 @@ const Dashboard = () => {
 
   const fetchData = async () => {
     try {
-      const resSum = await API.get('/api/expenses/summary', { withCredentials: true });
+      const resSum = await API.get('/api/expenses/summary');
       setSummary(resSum.data);
 
-      const resExp = await API.get(`/api/expenses/get?search=${search}&sortBy=${sortBy}`, { withCredentials: true });
+      const resExp = await API.get(`/api/expenses/get?search=${search}&sortBy=${sortBy}`);
       setExpenses(resExp.data.expenses);
     } catch (err) {
       console.error("Fetch Error:", err);
@@ -34,8 +34,7 @@ const Dashboard = () => {
     if (newBudget && !isNaN(newBudget)) {
       try {
         await API.patch('/api/users/update-budget', 
-          { budget: Number(newBudget) }, 
-          { withCredentials: true }
+          { budget: Number(newBudget) }
         );
         fetchData();
       } catch (err) {
@@ -48,7 +47,7 @@ const Dashboard = () => {
 
   const handleDelete = async (id) => {
     if (window.confirm("Delete this expense?")) {
-      await API.delete(`/api/expenses/delete/${id}`, { withCredentials: true });
+      await API.delete(`/api/expenses/delete/${id}`);
       fetchData();
     }
   };
