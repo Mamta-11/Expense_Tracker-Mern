@@ -51,7 +51,7 @@ const loginUser=async(req,res)=>{
         process.env.SECRET_KEY,
         {expiresIn:'1h'}
     )
-    const isProduction = process.env.NODE_ENV === 'production';
+    
   res.cookie('token', jwt_token, {
     httpOnly: true,
     secure: true, 

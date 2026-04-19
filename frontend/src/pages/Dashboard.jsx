@@ -57,114 +57,115 @@ const Dashboard = () => {
     <div className="min-h-screen bg-gray-50">
       <Navbar fetchData={fetchData} />
       
-      <div className="max-w-6xl mx-auto p-6">
-        
-        {/* Summary Section */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-      
-          <div className="bg-white p-5 rounded-2xl shadow-sm border-b-4 border-blue-500">
-            <h3 className="text-gray-500 text-xs font-bold uppercase">Total Spent</h3>
-            <p className="text-2xl font-black text-blue-600">₹{summary.totalExpenses || 0}</p>
+      <div className="max-w-6xl mx-auto p-3 sm:p-6">
+   
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-6">
+          
+          <div className="bg-white p-4 rounded-xl shadow-sm border-b-4 border-blue-500">
+            <h3 className="text-gray-400 text-[10px] sm:text-xs font-bold uppercase">Total Spent</h3>
+            <p className="text-lg sm:text-2xl font-black text-blue-600 truncate">₹{summary.totalExpenses || 0}</p>
           </div>
 
-          {/* Card 2: Monthly Budget (Editable) */}
-          <div className="bg-white p-5 rounded-2xl shadow-sm border-b-4 border-yellow-400 group relative">
-            <h3 className="text-gray-500 text-xs font-bold uppercase">Monthly Budget</h3>
-            <p className="text-2xl font-black text-yellow-600">₹{summary.monthlyBudget || 0}</p>
-            <button 
-              onClick={handleUpdateBudget}
-              className="absolute top-2 right-2 text-[10px] bg-yellow-100 text-yellow-700 px-2 py-1 rounded font-bold opacity-0 group-hover:opacity-100 transition"
-            >
-              EDIT
-            </button>
+          <div className="bg-white p-4 rounded-xl shadow-sm border-b-4 border-yellow-400 group relative">
+            <div className="flex justify-between items-center mb-1">
+              <h3 className="text-gray-400 text-[10px] sm:text-xs font-bold uppercase">Budget</h3>
+              <button 
+                onClick={handleUpdateBudget}
+                className="text-[9px] bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded font-bold"
+              >
+                EDIT
+              </button>
+            </div>
+            <p className="text-lg sm:text-2xl font-black text-yellow-600 truncate">₹{summary.monthlyBudget || 0}</p>
           </div>
 
-          {/* Card 3: Remaining */}
-          <div className="bg-white p-5 rounded-2xl shadow-sm border-b-4 border-green-500">
-            <h3 className="text-gray-500 text-xs font-bold uppercase">Remaining</h3>
-            <p className="text-2xl font-black text-green-600">₹{summary.remainingBalance || 0}</p>
+          <div className="bg-white p-4 rounded-xl shadow-sm border-b-4 border-green-500">
+            <h3 className="text-gray-400 text-[10px] sm:text-xs font-bold uppercase">Remaining</h3>
+            <p className="text-lg sm:text-2xl font-black text-green-600 truncate">₹{summary.remainingBalance || 0}</p>
           </div>
 
-          {/* Card 4: Status */}
-          <div className={`bg-white p-5 rounded-2xl shadow-sm border-b-4 ${summary.status === 'Over Budget' ? 'border-red-500' : 'border-purple-500'}`}>
-            <h3 className="text-gray-500 text-xs font-bold uppercase">Status</h3>
-            <p className={`text-lg font-bold ${summary.status === 'Over Budget' ? 'text-red-600' : 'text-purple-600'}`}>
+          <div className={`bg-white p-4 rounded-xl shadow-sm border-b-4 ${summary.status === 'Over Budget' ? 'border-red-500' : 'border-purple-500'}`}>
+            <h3 className="text-gray-400 text-[10px] sm:text-xs font-bold uppercase">Status</h3>
+            <p className={`text-[12px] sm:text-lg font-bold truncate ${summary.status === 'Over Budget' ? 'text-red-600' : 'text-purple-600'}`}>
               {summary.status || "N/A"}
             </p>
           </div>
         </div>
 
-        {/* Search & Add Section */}
-        <div className="flex flex-wrap gap-4 justify-between items-center mb-6">
-          <div className="flex gap-2">
+      
+        <div className="flex flex-col sm:flex-row gap-3 justify-between items-center mb-6">
+          <div className="flex gap-2 w-full sm:w-auto">
             <input 
-              type="text" placeholder="Search title..." 
-              className="p-2 border rounded-xl outline-none focus:ring-2 focus:ring-blue-300 text-sm"
+              type="text" placeholder="Search..." 
+              className="flex-1 sm:w-64 p-2.5 border rounded-xl outline-none focus:ring-2 focus:ring-blue-300 text-sm"
               onChange={(e) => setSearch(e.target.value)}
             />
             <select 
-              className="p-2 border rounded-xl outline-none text-sm bg-white"
+              className="p-2.5 border rounded-xl outline-none text-sm bg-white cursor-pointer"
               onChange={(e) => setSortBy(e.target.value)}
             >
-              <option value="newest">Newest First</option>
-              <option value="oldest">Oldest First</option>
+              <option value="newest">New</option>
+              <option value="oldest">Old</option>
             </select>
           </div>
           <button 
             onClick={() => { setCurrentEditData(null); setIsModalOpen(true); }}
-            className="bg-blue-600 text-white px-6 py-2 rounded-xl font-bold hover:bg-blue-700 transition shadow-lg shadow-blue-200"
+            className="w-full sm:w-auto bg-blue-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-700 transition shadow-md active:scale-95"
           >
             + Add Expense
           </button>
         </div>
 
-        {/* Table List */}
-        <div className="bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100">
-          <table className="w-full text-left border-collapse">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="p-4 text-xs font-bold text-gray-400 uppercase">Date</th>
-                <th className="p-4 text-xs font-bold text-gray-400 uppercase">Title</th>
-                <th className="p-4 text-xs font-bold text-gray-400 uppercase">Category</th>
-                <th className="p-4 text-xs font-bold text-gray-400 uppercase">Amount</th>
-                <th className="p-4 text-xs font-bold text-gray-400 uppercase text-center">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {expenses.map((exp) => (
-                <tr key={exp._id} className="border-t hover:bg-gray-50/50 transition">
-                  <td className="p-4 text-sm text-gray-500">
-                    {new Date(exp.date).toLocaleDateString()}
-                  </td>
-                  <td className="p-4">
-                    <p className="font-bold text-gray-800">{exp.title}</p>
-                    {exp.description && <p className="text-[10px] text-gray-400 italic">{exp.description}</p>}
-                  </td>
-                  <td className="p-4">
-                    <span className="bg-blue-50 text-blue-600 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">
-                      {exp.category}
-                    </span>
-                  </td>
-                  <td className="p-4 font-black text-red-500">₹{exp.amount}</td>
-                  <td className="p-4">
-                    <div className="flex justify-center gap-3">
-                      <button 
-                        onClick={() => { setCurrentEditData(exp); setIsModalOpen(true); }}
-                        className="text-blue-500 hover:text-blue-700 font-bold text-xs"
-                      >EDIT</button>
-                      <button 
-                        onClick={() => handleDelete(exp._id)}
-                        className="text-red-400 hover:text-red-600 font-bold text-xs"
-                      >DELETE</button>
-                    </div>
-                  </td>
+    
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-collapse min-w-[500px] sm:min-w-full">
+              <thead className="bg-gray-50/50">
+                <tr>
+                  <th className="p-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider">Date</th>
+                  <th className="p-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider">Title</th>
+                  <th className="p-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider">Category</th>
+                  <th className="p-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider">Amount</th>
+                  <th className="p-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider text-center">Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="divide-y divide-gray-100">
+                {expenses.map((exp) => (
+                  <tr key={exp._id} className="hover:bg-gray-50/50 transition-colors">
+                    <td className="p-4 text-xs text-gray-500 whitespace-nowrap">
+                      {new Date(exp.date).toLocaleDateString()}
+                    </td>
+                    <td className="p-4">
+                      <p className="font-semibold text-gray-800 text-sm line-clamp-1">{exp.title}</p>
+                      {exp.description && <p className="text-[10px] text-gray-400 italic line-clamp-1">{exp.description}</p>}
+                    </td>
+                    <td className="p-4">
+                      <span className="bg-blue-50 text-blue-600 px-2.5 py-1 rounded-lg text-[9px] font-bold uppercase">
+                        {exp.category}
+                      </span>
+                    </td>
+                    <td className="p-4 font-black text-red-500 text-sm whitespace-nowrap">₹{exp.amount}</td>
+                    <td className="p-4">
+                      <div className="flex justify-center gap-3">
+                        <button 
+                          onClick={() => { setCurrentEditData(exp); setIsModalOpen(true); }}
+                          className="text-blue-500 hover:text-blue-700 font-bold text-[10px]"
+                        >EDIT</button>
+                        <button 
+                          onClick={() => handleDelete(exp._id)}
+                          className="text-red-400 hover:text-red-600 font-bold text-[10px]"
+                        >DEL</button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          
           {expenses.length === 0 && (
-            <div className="p-20 text-center">
-              <p className="text-gray-400 font-medium">No expenses found. Start adding some!</p>
+            <div className="py-16 text-center">
+              <p className="text-gray-400 text-sm font-medium">No expenses found.</p>
             </div>
           )}
         </div>
