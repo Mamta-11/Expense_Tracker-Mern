@@ -14,10 +14,10 @@ const Dashboard = () => {
 
   const fetchData = async () => {
     try {
-      const resSum = await axios.get('http://localhost:5000/api/expenses/summary', { withCredentials: true });
+      const resSum = await axios.get('/api/expenses/summary', { withCredentials: true });
       setSummary(resSum.data);
 
-      const resExp = await axios.get(`http://localhost:5000/api/expenses/get?search=${search}&sortBy=${sortBy}`, { withCredentials: true });
+      const resExp = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/expenses/get?search=${search}&sortBy=${sortBy}`, { withCredentials: true });
       setExpenses(resExp.data.expenses);
     } catch (err) {
       console.error("Fetch Error:", err);
@@ -33,7 +33,7 @@ const Dashboard = () => {
     
     if (newBudget && !isNaN(newBudget)) {
       try {
-        await axios.patch('http://localhost:5000/api/users/update-budget', 
+        await axios.patch(`${import.meta.env.VITE_API_BASE_URL}/api/users/update-budget`, 
           { budget: Number(newBudget) }, 
           { withCredentials: true }
         );
@@ -48,7 +48,7 @@ const Dashboard = () => {
 
   const handleDelete = async (id) => {
     if (window.confirm("Delete this expense?")) {
-      await axios.delete(`http://localhost:5000/api/expenses/delete/${id}`, { withCredentials: true });
+      await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/expenses/delete/${id}`, { withCredentials: true });
       fetchData();
     }
   };

@@ -5,7 +5,7 @@ import axios from 'axios';
 const Navbar = () => {
   const navigate = useNavigate();
   const logout = async () => {
-    await axios.get('http://localhost:5000/api/users/logout', { withCredentials: true });
+    await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/users/logout`, { withCredentials: true });
     navigate('/login');
   };
   return (

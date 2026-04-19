@@ -10,7 +10,7 @@ const Register = () => {
     e.preventDefault();
     try {
       // Backend Register API call
-      await axios.post('http://localhost:5000/api/users/register', user);
+      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/users/register`, user);
       navigate('/login');
     } catch (err) {
       alert(err.response?.data?.message || "Registration Failed");

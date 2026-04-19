@@ -40,8 +40,8 @@ const AddExpense = ({ isOpen, onClose, refreshData, existingData }) => {
 
     try {
       const url = isEditMode 
-        ? `http://localhost:5000/api/expenses/update/${existingData._id}`
-        : 'http://localhost:5000/api/expenses/add';
+        ? `${import.meta.env.VITE_API_BASE_URL}/api/expenses/update/${existingData._id}`
+        : `${import.meta.env.VITE_API_BASE_URL}/api/expenses/add`;
       
       const method = isEditMode ? 'patch' : 'post';
       await axios[method](url, payload, { withCredentials: true });
