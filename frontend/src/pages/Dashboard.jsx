@@ -14,7 +14,7 @@ const Dashboard = () => {
 
   const fetchData = async () => {
     try {
-      const resSum = await axios.get('/api/expenses/summary', { withCredentials: true });
+      const resSum = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/expenses/summary`, { withCredentials: true });
       setSummary(resSum.data);
 
       const resExp = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/expenses/get?search=${search}&sortBy=${sortBy}`, { withCredentials: true });
