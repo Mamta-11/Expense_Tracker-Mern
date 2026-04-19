@@ -1,11 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import API from '../utils/api';
 
 const Navbar = () => {
   const navigate = useNavigate();
   const logout = async () => {
-    await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/users/logout`, { withCredentials: true });
+    await API.get('/api/users/logout', { withCredentials: true });
     navigate('/login');
   };
   return (

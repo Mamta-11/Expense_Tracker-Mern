@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
 import AddExpense from '../components/AddExpense';
-
+import API from '../utils/api';
 const Dashboard = () => {
   const [expenses, setExpenses] = useState([]);
   const [summary, setSummary] = useState({});
@@ -14,10 +14,10 @@ const Dashboard = () => {
 
   const fetchData = async () => {
     try {
-      const resSum = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/expenses/summary`, { withCredentials: true });
+      const resSum = await API.get('/api/expenses/summary', { withCredentials: true });
       setSummary(resSum.data);
 
-      const resExp = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/expenses/get?search=${search}&sortBy=${sortBy}`, { withCredentials: true });
+      const resExp = await API.get(`/api/expenses/get?search=${search}&sortBy=${sortBy}`, { withCredentials: true });
       setExpenses(resExp.data.expenses);
     } catch (err) {
       console.error("Fetch Error:", err);
@@ -33,7 +33,7 @@ const Dashboard = () => {
     
     if (newBudget && !isNaN(newBudget)) {
       try {
-        await axios.patch(`${import.meta.env.VITE_API_BASE_URL}/api/users/update-budget`, 
+        await API.patch('/api/users/update-budget', 
           { budget: Number(newBudget) }, 
           { withCredentials: true }
         );
@@ -48,7 +48,7 @@ const Dashboard = () => {
 
   const handleDelete = async (id) => {
     if (window.confirm("Delete this expense?")) {
-      await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/expenses/delete/${id}`, { withCredentials: true });
+      await API.delete(`/api/expenses/delete/${id}`, { withCredentials: true });
       fetchData();
     }
   };

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
+import API from '../utils/api';
 
 const Register = () => {
   const [user, setUser] = useState({ username: '', email: '', password: '' });
@@ -10,7 +11,7 @@ const Register = () => {
     e.preventDefault();
     try {
       // Backend Register API call
-      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/users/register`, user);
+      await API.post(`/api/users/register`, user);
       navigate('/login');
     } catch (err) {
       alert(err.response?.data?.message || "Registration Failed");
