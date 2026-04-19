@@ -52,11 +52,12 @@ const loginUser=async(req,res)=>{
         {expiresIn:'1h'}
     )
     const isProduction = process.env.NODE_ENV === 'production';
-    res.cookie('token', jwt_token,
-         {httpOnly: true,            
-    secure: isProduction,      
-    sameSite: isProduction ? 'none' : 'lax', 
-    maxAge: 7 * 24 * 60 * 60 * 1000 })
+  res.cookie('token', jwt_token, {
+    httpOnly: true,
+    secure: true, 
+    sameSite: 'none',
+    maxAge: 7 * 24 * 60 * 60 * 1000 
+});
     res.status(200).json({
         message:'User Login Successfully',
         user:{
