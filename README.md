@@ -50,4 +50,4 @@ A secure and user-friendly full-stack application designed to help users track d
    PORT=5000
    MONGO_URI=your_mongodb_uri
    SECRET_KEY=your_jwt_secret
-   NODE_ENV=development
+   NODE_ENV=development`12 qwaZa`zzzzzzz
