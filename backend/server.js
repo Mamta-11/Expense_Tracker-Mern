@@ -15,9 +15,6 @@ app.use(cors({
 }));
 
 dbConnect();
-
-
-
 // Routes
 app.use('/api/expenses', expenseRouter);
 app.use('/api/users', userRouter);
