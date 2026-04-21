@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    origin:"https://expense-tracker-mern-jade.vercel.app" || "http://localhost:5173", 
+    origin:"*", 
     credentials: true 
 }));
 
